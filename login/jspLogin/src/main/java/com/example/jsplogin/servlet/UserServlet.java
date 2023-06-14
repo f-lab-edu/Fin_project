@@ -35,6 +35,7 @@ public class UserServlet extends HttpServlet {
                 case "signup":
                     handleSignup(request, response);
                     break;
+
             }
         }
     }
@@ -47,7 +48,7 @@ public class UserServlet extends HttpServlet {
         if (userService.authenticate(id, password)) {
             HttpSession session = request.getSession();
             session.setAttribute("id", id);
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("login/home.jsp");
         } else {
             request.setAttribute("error", "잘못된 로그인 요청");
             request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -64,7 +65,7 @@ public class UserServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("id", id);
-        response.sendRedirect("home.jsp");
+        response.sendRedirect("login/home.jsp");
     }
 }
 
