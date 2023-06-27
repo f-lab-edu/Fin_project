@@ -9,10 +9,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String loginPage(Model model) {
-        System.out.println("로그인 오류");
+        System.out.println("로그인 핸들러");
         return "login";
+    }
+    @PostMapping("/login")
+    public String loginPagea(Model model) {
+        System.out.println("로그인 핸들러 post");
+        return "signup";
     }
 
     @GetMapping("/signup")
@@ -23,12 +28,10 @@ public class HomeController {
     public String handlesignupPage(Model model) {
         return "redirect:/home";
     }
-
     @GetMapping("/home")
     public String homePage() {
         return "home";
     }
-
     @GetMapping("/logout")
     public String handleLogout() {
         return "redirect:/login?logout";
