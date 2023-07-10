@@ -11,7 +11,7 @@
     <input type="text" id="id" name="id" required><br><br>
     <label for="password">Password:</label>
     <input type="password" id="password" name="password" required><br><br>
-    <input type="submit" value="로그인">
+    <input type="submit" value="회원가입">
 </form>
 </body>
 </html>

@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>로그인</h1>
-<form action="/login" method="get">
+<form action="/login" method="post">
     <label for="id">id:</label>
     <input type="text" id="id" name="id" required><br><br>
     <label for="password">Password:</label>
