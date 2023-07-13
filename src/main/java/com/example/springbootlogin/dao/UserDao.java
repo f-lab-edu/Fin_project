@@ -2,6 +2,7 @@ package com.example.springbootlogin.dao;
 
 import com.example.springbootlogin.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,13 @@ import java.sql.SQLException;
 public class UserDao {
 
     @Autowired  // 스프링 컨테이너로부터 JdbcTemplate 객체를 주입받습니다.
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public UserDao(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
 
     // 사용자 정보를 데이터베이스에 추가하는 메소드입니다.
     public void addUser(User user) {
@@ -27,7 +34,11 @@ public class UserDao {
     // 사용자 ID를 이용하여 데이터베이스에서 사용자 정보를 가져오는 메소드입니다.
     public User getUserById(String id) {
         String sql = "SELECT * FROM users WHERE id = ?";  // SQL 문장
-        return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);  // SQL 실행
+        try {
+            return jdbcTemplate.queryForObject(sql, new UserRowMapper(), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null; // 사용자가 발견되지 않은 경우 null 반환
+        }
     }
 
     // ResultSet의 레코드를 User 객체에 매핑하는 메소드입니다.

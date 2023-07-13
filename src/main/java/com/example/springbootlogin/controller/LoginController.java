@@ -4,7 +4,6 @@ import com.example.springbootlogin.dao.UserDao;
 import com.example.springbootlogin.dto.UserDto;
 import com.example.springbootlogin.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,9 +21,11 @@ public class LoginController {
     //생성자 주입방식
     private final UserDao userDao;
 
+
     @Autowired
     public LoginController(UserDao userDao) {
         this.userDao = userDao;
+
     }
 
     // "/login" 경로의 GET 요청을 처리하는 메소드입니다.
@@ -45,15 +46,30 @@ public class LoginController {
     public String handleSignupPage(UserDto userDto) {
         User user = new User();  // User 객체 생성
         user.setId(userDto.getId());  // id 설정
-
-        // 비밀번호 enco
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String hashedPassword = passwordEncoder.encode(userDto.getPassword());
-
-        user.setPassword(hashedPassword);   // password 설정
+        user.setPassword(userDto.getPassword());   // password 설정
 
         userDao.addUser(user);  // UserDao로 사용자 등록
+        System.out.println(user.getId() + user.getPassword());
         return "redirect:/login";  // "/login"으로 리다이렉트
+    }
+    @PostMapping("/login")
+    public String handleLoginForm(UserDto userDto) {
+        System.out.println("핸들러 도착");
+        String id = userDto.getId();
+        String password = userDto.getPassword();
+        System.out.println(password + "확인");
+
+        User user = userDao.getUserById(id);
+
+        if (user == null) {
+            System.out.println("널");
+            return "redirect:/login";
+        }
+        System.out.println("로그인 체크");
+        if (password.equals(user.getPassword())) {
+            return "redirect:/home";
+        }
+        return "redirect:/login";
     }
 
     // "/home" 경로의 GET 요청을 처리하는 메소드입니다.

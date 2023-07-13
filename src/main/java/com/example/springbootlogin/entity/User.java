@@ -14,6 +14,4 @@ import lombok.Setter;
 public class User {
     private String id;  // 사용자 아이디
     private String password;  // 사용자 비밀번호
-
-
 }
