@@ -6,11 +6,11 @@
 </head>
 <body>
 <h1>로그인</h1>
-<form action="/login" method="get">
+<form action="/login" method="post">
     <label for="id">id:</label>
-    <input type="text" id="id" name="id" required><br><br>
+    <input type="text" id="id" name="id" required><br>
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required><br><br>
+    <input type="password" id="password" name="password" required ><br>
     <input type="submit" value="Login">
 </form>
 

@@ -9,7 +9,7 @@
 <h2> 로그인 성공!! </h2>
 
 <form action="/logout" method="post">
-  <input type="submit" value="Logout"/>
+  <input type="submit" value="logout"/>
 </form>
 </body>
 </html>
